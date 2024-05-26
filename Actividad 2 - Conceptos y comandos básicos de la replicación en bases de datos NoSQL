@@ -1,0 +1,57 @@
+MiejReplicaSet = new ReplSetTest ({name: "MiReplicaSet", nodes: 3})
+MiejReplicaSet.startSet()
+MiejReplicaSet.initiate()
+conn=new Mongo("LAPTOP-9L1I7ULC:20000")
+testDB=conn.getDB("WTA_Masters_1000_Clásico_de_Tenis_Femenino_de_Medellín")
+testDB.isMaster()
+testDB.Deportistas.insert
+
+testDB.Deportistas.insert({
+    nombre: "Camila Rodriguez",
+    edad: "27",
+    genero: "Femenino",
+    brazo_dominante: "Derecho",
+    nacionalidad: "Colombiana"
+});
+
+testDB.Deportistas.insert({
+    nombre: "Ivonne Rodriguez",
+    edad: "21",
+    genero: "Femenino",
+    brazo_dominante: "Derecho",
+    nacionalidad: "Argentina"
+});
+
+
+testDB.Deportistas.insert({
+    nombre: "Yessica Blanquicett",
+    edad: "35",
+    genero: "Femenino",
+    brazo_dominante: "Derecho",
+    nacionalidad: "Chilena"
+});
+
+testDB.Deportistas.insert({
+    nombre: "Jazmin Zuluaga",
+    edad: "30",
+    genero: "Femenino",
+    brazo_dominante: "Derecho",
+    nacionalidad: "Española"
+});
+
+testDB.Deportistas.count()
+
+testDB.Deportistas.find().pretty()
+connSecondary = new Mongo("LAPTOP-9L1I7ULC:20001")
+SecondaryTestDB = connSecondary.getDB("WTA_Masters_1000_Clásico_de_Tenis_Femenino_de_Medellín")
+SecondaryTestDB.isMaster()
+testDB.Deportistas.find().pretty()
+SecondaryTestDB.Deportistas.count()
+connSecondary.setSecondaryOk()
+testDB.Deportistas.find().pretty()
+connPrimary = new Mongo("LAPTOP-9L1I7ULC:20000")
+PrimaryDB.adminCommand({shutdown: 1 })
+connNewPrimary = new Mongo("localhost:20001")
+newPrimaryDB.isMaster()
+
+
